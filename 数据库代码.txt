@@ -1,0 +1,54 @@
+-- 客户表
+CREATE TABLE customer(
+username VARCHAR(100) PRIMARY KEY,-- 账号
+PASSWORD VARCHAR(100),-- 密码
+NAME VARCHAR(100), -- 姓名
+sex VARCHAR(100), -- 性别
+address VARCHAR(100),-- 地址
+mobile VARCHAR(100),-- 手机
+typesid INT,-- 分类
+deptid INT -- 部门
+)
+
+-- 部门表
+CREATE TABLE dept(
+deptid INT PRIMARY KEY,
+deptname VARCHAR(100)
+)
+
+-- 用户分类表
+CREATE TABLE TYPES(
+typesid INT PRIMARY KEY,
+t_types VARCHAR(100)-- 分类名称
+)
+
+-- 出勤表
+CREATE TABLE cq(
+cqid INT PRIMARY KEY,
+NAME VARCHAR(100),-- 姓名
+d1 DATE ,-- 日期
+d2 VARCHAR(100) -- 说明
+)
+
+-- 超级管理员
+CREATE TABLE t_admin(
+username VARCHAR(100) PRIMARY KEY,
+PASSWORD VARCHAR(100)
+)
+
+-- 出差表
+CREATE TABLE t_contact(
+id INT PRIMARY KEY,
+customername VARCHAR(100), -- 用户
+phone VARCHAR(100), -- 联系方式
+content VARCHAR(100), -- 内容
+insertDate DATE -- 日期
+)
+
+-- 节假日表
+CREATE TABLE t_jjr(
+id INT PRIMARY KEY,
+v1 DATE, -- 日期
+v2 VARCHAR(100), -- 标题
+v3 VARCHAR(100) -- 内容
+)
