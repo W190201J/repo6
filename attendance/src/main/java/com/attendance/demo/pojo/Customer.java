@@ -2,10 +2,16 @@ package com.attendance.demo.pojo;
 
 import java.io.Serializable;
 
+/**
+ * @author _Heyuhao
+ * @date 2019/7/23
+ */
 public class Customer implements Serializable {
 
-    private String userName;
-    private String passWord;
+    private static final long serialVersionUID = -4722395012468864281L;
+    
+    private String username;
+    private String password;
     private String name;
     private String sex;
     private String address;
@@ -13,20 +19,20 @@ public class Customer implements Serializable {
     private Integer typesid;
     private Integer deptid;
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
