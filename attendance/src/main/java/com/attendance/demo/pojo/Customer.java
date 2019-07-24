@@ -16,8 +16,8 @@ public class Customer implements Serializable {
     private String sex;
     private String address;
     private String mobile;
-    private Integer typesid;
-    private Integer deptid;
+    private Types types;
+    private Dept dept;
 
     public String getUsername() {
         return username;
@@ -67,19 +67,19 @@ public class Customer implements Serializable {
         this.mobile = mobile;
     }
 
-    public Integer getTypesid() {
-        return typesid;
+    public Types getTypes() {
+        return types;
     }
 
-    public void setTypesid(Integer typesid) {
-        this.typesid = typesid;
+    public void setTypes(Types types) {
+        this.types = types;
     }
 
-    public Integer getDeptid() {
-        return deptid;
+    public Dept getDept() {
+        return dept;
     }
 
-    public void setDeptid(Integer deptid) {
-        this.deptid = deptid;
+    public void setDept(Dept dept) {
+        this.dept = dept;
     }
 }

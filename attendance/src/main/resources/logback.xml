@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
-<!-- scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true; scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 
-	debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态,默认值为false -->
+<!-- scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true; 
+     scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 
+	 debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态,默认值为false -->
 <configuration scan="true" scanPeriod="3600 seconds" debug="false">
-	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="logDir" value="e:/temp/logs" />
+
+	<!--定义日志文件的存储地址 勿在logback的配置中使用相对路径 -->
+	<property name="logDir" value="F:/JAVA/文件位置/STS-workspace-spring-tool-suite/spring_boot_logger/src/main/resources/logger" />
+	
 	<!-- 控制台输出 -->
-	<appender name="STDOUT"
-		class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- 日期格式化 -->
 		<encoder>
 			<charset>UTF-8</charset>
@@ -16,17 +18,14 @@
 		</encoder>
 	</appender>
 
-	<appender name="RollingFile"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-
+	<appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>TRACE</level>
 		</filter>
 
 		<!-- 可让每天产生一个日志文件，最多 10 个，自动回滚 -->
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${logDir}/file-%d{yyyy-MM-dd}.log</fileNamePattern>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logDir}/logger-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!--日志文件保留天数 -->
 			<maxHistory>10</maxHistory>
 		</rollingPolicy>
@@ -35,12 +34,13 @@
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
 			<charset>UTF-8</charset>
 		</encoder>
+		
 		<!--日志文件最大的大小 -->
-		<triggeringPolicy
-			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
 			<MaxFileSize>10MB</MaxFileSize>
 		</triggeringPolicy>
 	</appender>
+	
 	<!-- 日志级别(大小写无关)：TRACE, DEBUG, INFO, WARN, ERROR, ALL和OFF -->
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
