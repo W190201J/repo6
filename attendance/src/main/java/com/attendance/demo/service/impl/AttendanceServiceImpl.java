@@ -12,8 +12,18 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Autowired
     private AttendanceDao attendanceDao;
 
+    /**
+     *GRC
+     * @param customer
+     * @return
+     */
     @Override
     public int addAtten(Customer customer) {
         return attendanceDao.insertAtten(customer);
+    }
+
+    @Override
+    public Customer selectById(String username) {
+        return attendanceDao.queryByID(username);
     }
 }

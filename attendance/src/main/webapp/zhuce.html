@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="text" name="sex" required  lay-verify="required" placeholder="请输入性别" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" required  lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号码</label>
+        <div class="layui-input-block">
+            <input type="text" name="mobile" required  lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">职位类别</label>
+        <div class="layui-input-block">
+            <input type="text" name="types.typesid" id="types" required  lay-verify="required" placeholder="请输入职位" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-block">
+            <input type="text" name="dept.deptid" id="dept" required  lay-verify="required" placeholder="请输入部门" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" lay-submit lay-filter="formDemo">注册</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+   <script src="js/jquery-3.3.1.min.js"></script>
+   <script src="js/jquery.serializejson.min.js"></script>
+   <script src="layui/layui.js"></script>
+   <script>
+       //获得需要使用的模块
+       layui.use('form',function () {
+           var form=layui.form;
+
+           //监听提交
+           form.on('submit(formDemo)',function (data) {
+
+               var json=$('form').serializeJSON();
+               json.dept={
+                   'deptid':$('#dept').val()
+               }
+               json.types={
+                   'typesid':$('#types').val()
+               }
+               var jsonstr=JSON.stringify(json);
+
+               $.ajax({
+                   method:'post',
+                   url:'/api/zhuce',
+                   data:jsonstr,
+                   contentType:'application/json',
+                   success:function (data) {
+                       if(data=='ok'){
+                           layer.msg('注册成功,请保管好您的账号和密码',{time:1000,icon:1},function () {
+                               //跳转至登录页面
+                               location.href="login.html";
+                           })
+                       }else{
+                           layer.msg("注册失败,请重新注册",{time:2000,icon:2})
+                       }
+                   },
+                   dataType:'text'
+               })
+           })
+       })
+   </script>
+
+</body>
+</html>
