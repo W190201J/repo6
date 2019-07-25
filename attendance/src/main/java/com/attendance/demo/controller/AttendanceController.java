@@ -2,9 +2,14 @@ package com.attendance.demo.controller;
 
 import com.attendance.demo.pojo.Customer;
 import com.attendance.demo.service.AttendanceService;
+import com.attendance.demo.utils.JwtTokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -14,6 +19,9 @@ public class AttendanceController {
 
     @Resource(name = "AttendanceServiceImpl")
     private AttendanceService attendanceService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     /**
      * GRC注册
@@ -34,12 +42,15 @@ public class AttendanceController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Customer customer){
-       Customer customer1=attendanceService.selectById(customer.getUsername());
-       if(customer1!=null){
-           //登录成功
-
-       }
-       //登录失败
+    public ResponseEntity<?> login(Customer customer){
+        System.out.println("aaaaa");
+        Customer customer1=attendanceService.selectById(customer.getUsername());
+        if(customer1!=null){
+            //登录成功
+            String token=jwtTokenUtil.createToken(customer.getUsername(),customer.getPassword());
+            return new ResponseEntity<>(token ,HttpStatus.OK);
+        }
+        //登录失败
+        return new ResponseEntity<>("no",HttpStatus.NO_CONTENT);
     }
 }
