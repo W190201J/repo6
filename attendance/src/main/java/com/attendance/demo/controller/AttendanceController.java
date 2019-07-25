@@ -6,10 +6,7 @@ import com.attendance.demo.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -36,21 +33,21 @@ public class AttendanceController {
             if(i>0){
                 return new ResponseEntity<>("ok",HttpStatus.OK);
             }
-            return new ResponseEntity<>("no",HttpStatus.SERVICE_UNAVAILABLE);
+            return new ResponseEntity<>("no",HttpStatus.OK);
         }
-        return new ResponseEntity<>("no",HttpStatus.CONFLICT);
+        return new ResponseEntity<>("no",HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(Customer customer){
-        System.out.println("aaaaa");
-        Customer customer1=attendanceService.selectById(customer.getUsername());
+    public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String password){
+        Customer customer1=attendanceService.selectById(username);
         if(customer1!=null){
-            //登录成功
-            String token=jwtTokenUtil.createToken(customer.getUsername(),customer.getPassword());
-            return new ResponseEntity<>(token ,HttpStatus.OK);
+            if(!customer1.getPassword().equals(password)){
+                return new ResponseEntity<>("no_pass",HttpStatus.OK);
+            }
+            String token=jwtTokenUtil.createToken(username,password);
+            return new ResponseEntity<String>(token ,HttpStatus.OK);
         }
-        //登录失败
-        return new ResponseEntity<>("no",HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("no",HttpStatus.OK);
     }
 }

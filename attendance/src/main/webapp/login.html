@@ -25,9 +25,14 @@
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/jquery.serializejson.min.js"></script>
 	<script src="js/jwt.js"></script>
+	<script src="layui/layui.js"></script>
 	<script>
 
 		$('#login').on('click',function () {
+
+			layui.use('layer',function () {
+				var layer=layui.layer;
+			})
 
 			var username=$('#username').val();
 			var password=$('#password').val();
@@ -38,13 +43,19 @@
 				data:{'username':username,'password':password},
 				success:function (data) {
 					if (data=='no'){
-						alert("登录失败");
-					} else{
-						alert("ok");
+						layer.msg("您还没有注册，请先注册在登录",{time:2000,icon:3},function () {
+							location.href="zhuce.html";
+						});
+					}else if (data=='no_pass'){
+						layer.msg("登录失败，密码错误",{time:2000,icon:2});
+					}else{
+						layer.msg("登录成功,正在为您加载资源",{time:2000,icon:1},function () {
+							setJwtToken(data);
+							location.href="views/admin-staffmanage.html";
+						})
 					}
 				},
-				contentType:'application/json',
-				dataType:'json'
+				dataType:'text'
 			})
 		})
 
